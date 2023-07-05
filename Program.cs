@@ -2,11 +2,10 @@
 // (если в условии задачи написано "возводит число A в натуральную степень B", то мы допускаем, 
 // что число B на вход мы получим натуральное, а вот А может быть любое, иначе придется использовать слишком много проверок)
 
-// Задача 50. Напишите программу, которая на вход принимает позиции элемента в двумерном массиве, 
-// и возвращает значение этого элемента или же указание, что такого элемента нет.
+// Задача 52. Задайте двумерный массив из целых чисел. Найдите среднее арифметическое элементов в каждом столбце. 
 
 
-Console.WriteLine("Task 47:");
+Console.WriteLine("Task 52:");
 Console.WriteLine();
 
 int[,] CreateArray(int row, int col)
@@ -16,34 +15,52 @@ int[,] CreateArray(int row, int col)
     for (int i = 0; i < row; i++)
         for (int j = 0; j < col; j++)
         {
-            arr[i, j] = new Random().Next(-10, 11);
+            arr[i, j] = new Random().Next(-row, col + 1);
         }
 
     return arr;
 
 }
 
-void ShowArray(int[,] arr)
+void ShowMainArray(int[,] arr)
 {
     for (int i = 0; i < arr.GetLength(0); i++)
     {
         for (int j = 0; j < arr.GetLength(1); j++)
         {
-            Console.Write(arr[i, j] + " ");
+            Console.Write(arr[i,j] + " ");
         }
         Console.WriteLine();
 
     }
 }
 
-void FindElement(int row, int col, int[,] arr)
+void ShowResArray(double[] arr)
 {
-    if (row >= arr.GetLength(0) || col >= arr.GetLength(1))
-        Console.WriteLine($"There is no element with this index [{row}, {col}]");
-    else
-        Console.WriteLine($"Ur element is [{arr[row,col]}]");
+    Console.Write("[");
+    for (int i = 0; i < arr.GetLength(0) - 1; i++)
+    {
+        Console.Write("{0:f3}, ", arr[i]);
+    }
+    Console.Write("{0:f3}]", arr[arr.GetLength(0) - 1]);
 }
 
+double [] ArithmeticMean(int [,] arr)
+{
+    double [] resultArray = new double[arr.GetLength(1)];
+
+    for (int i = 0; i < arr.GetLength(1); i++)
+    {
+        for (int j = 0; j < arr.GetLength(0); j++)
+        {
+            resultArray[i] += arr[j,i];
+        }
+        resultArray[i] /= arr.GetLength(0);
+    }
+
+    return resultArray;
+
+}
 
 
 Console.Write("Enter amount of rows: ");
@@ -55,13 +72,11 @@ int col = Convert.ToInt32(Console.ReadLine());
 int[,] arr = new int[row, col];
 arr = CreateArray(row, col);
 
-Console.WriteLine("Ur arr: ");
-ShowArray(arr);
+Console.WriteLine("Ur arr:");
+ShowMainArray(arr);
 
-Console.Write("Enter number of row (Rows start from 0!): ");
-int rowToFind = Convert.ToInt32(Console.ReadLine());
+//double resultArray = new double [arr.GetLength(1)];
+double [] resultArray = ArithmeticMean(arr);
 
-Console.Write("Enter number of column (Columns start from 0): ");
-int colToFind = Convert.ToInt32(Console.ReadLine());
-
-FindElement(rowToFind, colToFind, arr);
+Console.WriteLine("Arithmetic mean of each column: ");
+ShowResArray(resultArray);

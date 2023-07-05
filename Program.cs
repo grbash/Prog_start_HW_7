@@ -6,7 +6,7 @@
 // и возвращает значение этого элемента или же указание, что такого элемента нет.
 
 
-Console.WriteLine("Task 47:");
+Console.WriteLine("Task 50:");
 Console.WriteLine();
 
 int[,] CreateArray(int row, int col)
